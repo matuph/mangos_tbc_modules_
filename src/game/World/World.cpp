@@ -82,10 +82,20 @@
 #include "playerbot/RandomPlayerbotMgr.h"
 #endif
 
+#ifdef ENABLE_MODULES
+#include "ModuleMgr.h"
+#endif
+
 #include <algorithm>
 #include <mutex>
 #include <cstdarg>
 #include <memory>
+
+
+#ifdef ENABLE_MODULES
+    sModuleMgr.OnWorldPreInitialized();
+#endif
+
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -1483,6 +1493,10 @@ void World::SetInitialWorldSettings()
     auctionbot.Init();
 #endif
 #endif
+	
+#ifdef ENABLE_MODULES
+    sModuleMgr.OnWorldInitialized();
+#endif
 
     sLog.outString("---------------------------------------");
     sLog.outString("      CMANGOS: World initialized       ");
@@ -1747,6 +1761,10 @@ void World::Update(uint32 diff)
     meas.add_field("map", std::to_string(map));
     meas.add_field("singletons", std::to_string(singletons));
     meas.add_field("cleanup", std::to_string(cleanup));
+#endif
+	
+#ifdef ENABLE_MODULES
+    sModuleMgr.OnWorldUpdated(diff);
 #endif
 }
 
