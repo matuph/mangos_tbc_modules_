@@ -58,3 +58,8 @@ endif()
 if(BUILD_LOGIN_SERVER)
   add_subdirectory(realmd)
 endif()
+
+# Include modules enabled
+if(BUILD_MODULES)
+    add_subdirectory(modules)
+endif()
